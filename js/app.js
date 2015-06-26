@@ -46,8 +46,8 @@ Enemy.prototype.wrap = function() {
   // Randomize row number and speed
   this.setRandomAttr();
   // Reset the x
-  // Set the x position to the -200 (beyond the edge of the screen)
-  this.x = -200;
+  // Set the x position to the -101 (exactly the width of 1 bug)
+  this.x = -101;
 }
 
 // Function for randomizing enemy attributes, for at initialization and when wrapping
