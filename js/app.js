@@ -69,11 +69,15 @@ Enemy.prototype.collisionBox = [1, 77, 112, 142];
 
 var Player = function () {
   this.sprite = 'images/char-boy.png';
+  // Whether the handleInput method should accept input
+  this.acceptInput = true;
   this.reset();
 };
 
 //A function for resetting the player to the default state
 Player.prototype.reset = function () {
+  // Set acceptInput to true
+  this.acceptInput = true;
   // Set x to 2 tiles to the right.
   this.x = data.tile.width * 2;
   // Set x to 4 tiles down. Subtract 32 so figure is in correct position
@@ -81,17 +85,15 @@ Player.prototype.reset = function () {
 };
 
 Player.prototype.update = function () {
-  //If at row 1 (x value -32), reset
-  this.y <= -32 && this.reset();
+  //If at row 1 (x value -32), reset. The acceptInput is so the restart function does not fire continuously during the time waited in the restart function.
+  this.y <= -32 && this.acceptInput && this.restart();
   //Check collision
   for (var i = 0; i < allEnemies.length; i++) {
     // Get a reference to the enemy currently being processed for convenience
     var currentEnemy = allEnemies[i];
-    this.x + this.collisionBox[0] < currentEnemy.x + currentEnemy.collisionBox[2] &&
-    this.x + this.collisionBox[2] > currentEnemy.x + currentEnemy.collisionBox[0] &&
-    this.y + this.collisionBox[1] < currentEnemy.y + currentEnemy.collisionBox[3] &&
-    this.y + this.collisionBox[3] > currentEnemy.y + currentEnemy.collisionBox[1] &&
-    this.reset();
+    if (this.x + this.collisionBox[0] < currentEnemy.x + currentEnemy.collisionBox[2] && this.x + this.collisionBox[2] > currentEnemy.x + currentEnemy.collisionBox[0] && this.y + this.collisionBox[1] < currentEnemy.y + currentEnemy.collisionBox[3] && this.y + this.collisionBox[3] > currentEnemy.y + currentEnemy.collisionBox[1]) {
+      this.reset();
+    }
   }
 
 };
@@ -100,9 +102,28 @@ Player.prototype.render = function () {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+// a function that disables input, pauses and resets
+
+Player.prototype.restart = function () {
+  // Freeze the player for 800ms and then restart
+  this.acceptInput = false;
+  // Set a reference to this so reset can be called from within settimeout
+  var currentPlayer = this;
+  setTimeout(function(){
+    currentPlayer.reset();
+  }, 800);
+
+};
+
 Player.prototype.collisionBox = [17, 86, 83, 150]; // This is not the exact bounds of the character. Instead, this bounding box is used to constrain collisions to the "current" row.
 
 Player.prototype.handleInput = function (keyValue) {
+
+  // Do not continue if acceptInput is false. (an if statement needs to be used as you cannot return from boolean operators)
+
+  if (this.acceptInput === false) {
+    return;
+  }
 
   // Hard coded values for preventing the player from going off the screen
   //Up down left right movement
