@@ -1,7 +1,16 @@
-// A variable for referencing the width and height of the tiles
-var tile = {
-  "width": 101,
-  "height": 83
+// A data object holding the global game configuration
+
+var data = {
+  // Canvas size
+  "canvas": {
+    "width": 505,
+    "height": 606
+  },
+  // The size for each
+  "tile": {
+    "width": 101,
+    "height": 83
+  }
 };
 
 // Enemies our player must avoid
@@ -37,7 +46,7 @@ Enemy.prototype.update = function(dt) {
 
 Enemy.prototype.wrap = function() {
   // Set the row number to a random row. Add another tile.height and subtract 16 so the enemies are centered on the blocks, starting from the second row.
-  this.y = Math.floor(Math.random() * 3) * tile.height + tile.height - 16;
+  this.y = Math.floor(Math.random() * 3) * data.tile.height + data.tile.height - 16;
   // Set a random speed from 300 to 600;
   this.speed = 300 + Math.random() * 300;
   // Reset the x
@@ -66,9 +75,9 @@ var Player = function () {
 //A function for resetting the player to the default state
 Player.prototype.reset = function () {
   // Set x to 2 tiles to the right.
-  this.x = tile.width * 2;
+  this.x = data.tile.width * 2;
   // Set x to 4 tiles down. Subtract 32 so figure is in correct position
-  this.y = tile.height * 5 - 32;
+  this.y = data.tile.height * 5 - 32;
 };
 
 Player.prototype.update = function () {
@@ -102,25 +111,25 @@ Player.prototype.handleInput = function (keyValue) {
     if (this.x <= 20) {
       return;
     }
-    this.x -= tile.width;
+    this.x -= data.tile.width;
     break;
     case 'right':
     if (this.x >= 400) {
       return;
     }
-    this.x += tile.width;
+    this.x += data.tile.width;
     break;
     case 'up':
     if (this.y <= 20) {
       return;
     }
-    this.y -= tile.height;
+    this.y -= data.tile.height;
     break;
     case 'down':
     if (this.y >= 360) {
       return;
     }
-    this.y += tile.height;
+    this.y += data.tile.height;
     break;
   }
 };
