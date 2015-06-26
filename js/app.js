@@ -22,10 +22,8 @@ var Enemy = function() {
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
     // Use the wrap function to position the enemy
-    this.wrap();
-
-
-
+    this.x = -200;
+    this.setRandomAttr();
 }
 
 // Update the enemy's position, required method for game
@@ -45,13 +43,19 @@ Enemy.prototype.update = function(dt) {
 // Change enemy row number and speed when created, or after wrapping past the screen's edge
 
 Enemy.prototype.wrap = function() {
+  // Randomize row number and speed
+  this.setRandomAttr();
+  // Reset the x
+  // Set the x position to the -200 (beyond the edge of the screen)
+  this.x = -200;
+}
+
+// Function for randomizing enemy attributes, for at initialization and when wrapping
+Enemy.prototype.setRandomAttr = function() {
   // Set the row number to a random row. Add another tile.height and subtract 16 so the enemies are centered on the blocks, starting from the second row.
   this.y = Math.floor(Math.random() * 3) * data.tile.height + data.tile.height - 16;
   // Set a random speed from 300 to 600;
   this.speed = 300 + Math.random() * 300;
-  // Reset the x
-  // Set the x position to the -200 (beyond the edge of the screen)
-  this.x = -200;
 }
 
 // Draw the enemy on the screen, required method for game
