@@ -21,8 +21,8 @@ var Enemy = function() {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-    // Use the wrap function to position the enemy
-    this.x = -200;
+    // Random starting x
+    this.x = Math.random() * data.canvas.width;
     this.setRandomAttr();
 }
 
