@@ -24,6 +24,8 @@ var Enemy = function() {
     // Random starting x
     this.x = Math.random() * data.canvas.width;
     this.setRandomAttr();
+    // Whether the enemy should move reversed. Randomly chosen.
+    this.reversed = Math.random() >= 0.5;
 }
 
 // Update the enemy's position, required method for game
@@ -32,22 +34,22 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    this.x += this.speed * dt;
+    // Subtract if reversed, add otherwise
+    this.reversed ? this.x -= this.speed * dt : this.x += this.speed * dt;
 
-    // If x is higher than canvas width, wrap
-    if (this.x > canvas.width) {
-      this.wrap();
-    }
+    // If x is higher than canvas width and backward is false, wrap
+    this.reversed ? this.x < -101 && this.wrap() : this.x > data.canvas.width && this.wrap();
 }
 
 // Change enemy row number and speed when created, or after wrapping past the screen's edge
 
 Enemy.prototype.wrap = function() {
   // Randomize row number and speed
+  console.log('YAY!');
   this.setRandomAttr();
   // Reset the x
   // Set the x position to the -101 (exactly the width of 1 bug)
-  this.x = -101;
+  this.x = this.reversed ? data.canvas.width : -101;
 }
 
 // Function for randomizing enemy attributes, for at initialization and when wrapping
