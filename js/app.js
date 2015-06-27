@@ -45,7 +45,6 @@ Enemy.prototype.update = function(dt) {
 
 Enemy.prototype.wrap = function() {
   // Randomize row number and speed
-  console.log('YAY!');
   this.setRandomAttr();
   // Reset the x
   // Set the x position to the -101 (exactly the width of 1 bug)
