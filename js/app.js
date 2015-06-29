@@ -2,14 +2,14 @@
 
 var data = {
   // Canvas size
-  "canvas": {
-    "width": 505,
-    "height": 606
+  'canvas': {
+    'width': 505,
+    'height': 606
   },
   // The size for each
-  "tile": {
-    "width": 101,
-    "height": 83
+  'tile': {
+    'width': 101,
+    'height': 83
   }
 };
 
