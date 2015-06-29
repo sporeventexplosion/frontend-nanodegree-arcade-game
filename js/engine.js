@@ -174,9 +174,12 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/enemy-bug-reversed.png',
-        'images/char-boy.png'
+        'images/enemy-bug-reversed.png'
     ]);
+
+    // Also list the list of sprites
+
+    Resources.load(data.sprites);
     Resources.onReady(init);
 
     /* Assign the canvas' context object to the global variable (the window

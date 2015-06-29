@@ -10,7 +10,15 @@ var data = {
   'tile': {
     'width': 101,
     'height': 83
-  }
+  },
+  // Array of character sprites
+  'sprites': [
+    'images/char-boy.png',
+    'images/char-cat-girl.png',
+    'images/char-horn-girl.png',
+    'images/char-pink-girl.png',
+    'images/char-princess-girl.png'
+  ]
 };
 
 // Generic entity object for inheriting. Does not contain any actual functionality
