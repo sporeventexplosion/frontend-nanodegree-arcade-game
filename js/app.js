@@ -13,6 +13,18 @@ var data = {
   }
 };
 
+// Generic entity object for inheriting. Does not contain any actual functionality
+
+var Entity = function () {
+  // Blank
+};
+
+// Simple, generalized render function
+
+Entity.prototype.render = function () {
+  ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+
 // Enemies our player must avoid
 
 var Enemy = function() {
