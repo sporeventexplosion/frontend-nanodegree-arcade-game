@@ -138,8 +138,8 @@ var Engine = (function(global) {
             }
         }
 
-
-        renderEntities();
+        data.state === 1 && characterSelector.render();
+        data.state === 0 && renderEntities();
     }
 
     /* This function is called by the render function and is called on each game

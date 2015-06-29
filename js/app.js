@@ -18,7 +18,9 @@ var data = {
     'images/char-horn-girl.png',
     'images/char-pink-girl.png',
     'images/char-princess-girl.png'
-  ]
+  ],
+  // The state of the game. 1 is character selecting and 0 is playing
+  'state': 1 // Start the game on the character selector
 };
 
 // Generic entity object for inheriting. Does not contain any actual functionality
@@ -184,6 +186,40 @@ Player.prototype.handleInput = function (keyValue) {
   }
 };
 
+// Character selector PLAIN OBJECT (not a function), with update and render functions
+
+var characterSelector = {};
+
+Resources.load("images/Selector.png");
+// Render the characters to be selected
+characterSelector.render = function () {
+  //Render the text first
+  ctx.font = "24px Impact, sans-serif";
+  ctx.textAlign = "center";
+  ctx.fillText("Use left and right arrows to select character", data.canvas.width / 2, 265);
+  ctx.fillText("Press Enter to Start", data.canvas.width / 2, 300);
+  // Render each character
+  ctx.drawImage(Resources.get("images/Selector.png"), this.selected * 101, 300);
+  for (var i = 0; i < data.sprites.length; i++) {
+    ctx.drawImage(Resources.get(data.sprites[i]), i * 101, 300);
+  }
+};
+
+characterSelector.handleInput = function (keyCode) {
+  keyCode === 37 && this.selected > 0 && this.selected--;
+  keyCode === 39 && this.selected < characterSelector.numCharacters - 1 && this.selected++;
+  if (keyCode === 13) {
+    // Start game
+    player.sprite = data.sprites[this.selected];
+    data.state = 0;
+  }
+}
+
+characterSelector.selected = 0;
+
+// Number of characters
+characterSelector.numCharacters = data.sprites.length;
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
@@ -202,12 +238,18 @@ for (var i = 0; i < 3; i++) {
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
-    var allowedKeys = {
+  // Send event to player only if the game is being played
+  if (data.state === 0) {
+        var allowedKeys = {
         37: 'left',
         38: 'up',
         39: 'right',
         40: 'down'
     };
-
     player.handleInput(allowedKeys[e.keyCode]);
+  } else if (data.state === 1) {
+    // Simply send the keycode
+    characterSelector.handleInput(e.keyCode);
+  }
+
 });
