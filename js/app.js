@@ -40,6 +40,10 @@ var Enemy = function() {
     this.sprite = this.reversed ? 'images/enemy-bug-reversed.png' : 'images/enemy-bug.png';
 }
 
+Enemy.prototype = Object.create(Entity.prototype);
+
+Enemy.prototype.constructor = Enemy;
+
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
@@ -71,11 +75,6 @@ Enemy.prototype.setRandomAttr = function() {
   this.speed = 300 + Math.random() * 300;
 }
 
-// Draw the enemy on the screen, required method for game
-Enemy.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
-
 // x and y start and end for collision box
 
 Enemy.prototype.collisionBox = [1, 77, 112, 142];
@@ -90,6 +89,10 @@ var Player = function () {
   this.acceptInput = true;
   this.reset();
 };
+
+Player.prototype = Object.create(Entity.prototype);
+
+Player.prototype.constructor = Player;
 
 //A function for resetting the player to the default state
 Player.prototype.reset = function () {
@@ -115,9 +118,6 @@ Player.prototype.update = function () {
 
 };
 
-Player.prototype.render = function () {
-  ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
 
 // a function that disables input, pauses and resets
 
