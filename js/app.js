@@ -120,7 +120,7 @@ Player.prototype.restart = function () {
 
 };
 
-Player.prototype.collisionBox = [17, 86, 83, 150]; // This is not the exact bounds of the character. Instead, this bounding box is used to constrain collisions to the "current" row.
+Player.prototype.collisionBox = [17, 86, 83, 150]; // This is not the exact bounds of the character. Instead, this collision box is used to constrain collisions to the "current" row.
 
 Player.prototype.handleInput = function (keyValue) {
 
