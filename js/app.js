@@ -25,6 +25,13 @@ Entity.prototype.render = function () {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
+// A generic collision checking function with a target input
+
+Entity.prototype.checkCollision = function (target) {
+  // Simple box collision checking
+  return this.x + this.collisionBox[0] < target.x + target.collisionBox[2] && this.x + this.collisionBox[2] > target.x + target.collisionBox[0] && this.y + this.collisionBox[1] < target.y + target.collisionBox[3] && this.y + this.collisionBox[3] > target.y + target.collisionBox[1];
+};
+
 // Enemies our player must avoid
 
 var Enemy = function() {
@@ -110,10 +117,7 @@ Player.prototype.update = function () {
   //Check collision
   for (var i = 0; i < allEnemies.length; i++) {
     // Get a reference to the enemy currently being processed for convenience
-    var currentEnemy = allEnemies[i];
-    if (this.x + this.collisionBox[0] < currentEnemy.x + currentEnemy.collisionBox[2] && this.x + this.collisionBox[2] > currentEnemy.x + currentEnemy.collisionBox[0] && this.y + this.collisionBox[1] < currentEnemy.y + currentEnemy.collisionBox[3] && this.y + this.collisionBox[3] > currentEnemy.y + currentEnemy.collisionBox[1]) {
-      this.reset();
-    }
+    this.checkCollision(allEnemies[i]) && this.reset();
   }
 
 };
