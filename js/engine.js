@@ -188,4 +188,14 @@ var Engine = (function(global) {
      */
      global.canvas = canvas;
     global.ctx = ctx;
+    // Initialize the global Engine
+    return {
+        'main': main,
+        'init': init,
+        'update': update,
+        'updateEntities': updateEntities,
+        'render': render,
+        'renderEntities': renderEntities,
+        'reset': reset
+    };
 })(this);
