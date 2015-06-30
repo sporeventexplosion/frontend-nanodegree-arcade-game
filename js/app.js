@@ -37,7 +37,7 @@ var Entity = function () {
 
 Entity.prototype.render = function () {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
+};
 
 // A generic collision checking function with a target input
 
@@ -59,7 +59,7 @@ var Enemy = function() {
     // Whether the enemy should move reversed. Randomly chosen.
     this.reversed = Math.random() >= 0.5;
     this.sprite = this.reversed ? 'images/enemy-bug-reversed.png' : 'images/enemy-bug.png';
-}
+};
 
 Enemy.prototype = Object.create(Entity.prototype);
 
@@ -76,7 +76,7 @@ Enemy.prototype.update = function(dt) {
 
     // If x is higher than canvas width and backward is false, wrap
     this.reversed ? this.x < -101 && this.wrap() : this.x > data.canvas.width && this.wrap();
-}
+};
 
 // Change enemy row number and speed when created, or after wrapping past the screen's edge
 
@@ -86,7 +86,7 @@ Enemy.prototype.wrap = function() {
   // Reset the x
   // Set the x position to the -101 (exactly the width of 1 bug)
   this.x = this.reversed ? data.canvas.width : -101;
-}
+};
 
 // Function for randomizing enemy attributes, for at initialization and when wrapping
 Enemy.prototype.setRandomAttr = function() {
@@ -94,13 +94,13 @@ Enemy.prototype.setRandomAttr = function() {
   this.y = Math.floor(Math.random() * 3) * data.tile.height + data.tile.height - 16;
   // Set a random speed from 300 to 600;
   this.speed = 300 + Math.random() * 300;
-}
+};
 
 // handleCollision function for Enemies
 
 Enemy.prototype.handleCollision = function (target) {
-  data.numLives > 0 && data.numLives--, target.reset()
-}
+  data.numLives > 0 && data.numLives--, target.reset();
+};
 
 // x and y start and end for collision box
 
@@ -257,7 +257,7 @@ characterSelector.handleInput = function (keyCode) {
     player.sprite = data.sprites[this.selected];
     data.state = 0;
   }
-}
+};
 
 characterSelector.selected = 0;
 
