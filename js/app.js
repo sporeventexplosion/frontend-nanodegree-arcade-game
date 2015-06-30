@@ -96,6 +96,12 @@ Enemy.prototype.setRandomAttr = function() {
   this.speed = 300 + Math.random() * 300;
 }
 
+// handleCollision function for Enemies
+
+Enemy.prototype.handleCollision = function (target) {
+  data.numLives > 0 && data.numLives--, target.reset()
+}
+
 // x and y start and end for collision box
 
 Enemy.prototype.collisionBox = [1, 77, 112, 142];
@@ -131,7 +137,7 @@ Player.prototype.update = function () {
   this.y <= -32 && this.acceptInput && this.restart();
   //Check collision
   for (var i = 0; i < allEnemies.length; i++) {
-    this.checkCollision(allEnemies[i]) && (data.numLives > 0 && data.numLives--, this.reset());
+    this.checkCollision(allEnemies[i]) && allEnemies[i].handleCollision(this);
   }
 
 };
