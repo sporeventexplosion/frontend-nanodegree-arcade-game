@@ -27,6 +27,15 @@ var data = {
 
 data.numLives = data.startLives; // Current number. Lives should be set globally so there are no conflicts
 
+// Utility colliders for checking collisions at a different location than an entity's actual position
+
+var Collider = function (collisionBox) {
+  this.collisionBox = collisionBox;
+  this.x = 0; // Placeholder coordinates
+  this.y = 0;
+};
+
+
 // Generic entity object for inheriting. Does not contain any actual functionality
 
 var Entity = function () {
