@@ -20,8 +20,12 @@ var data = {
     'images/char-princess-girl.png'
   ],
   // The state of the game. 1 is character selecting and 0 is playing
-  'state': 1 // Start the game on the character selector
+  'state': 1, // Start the game on the character selector
+  'startLives': 5, // Number of lives to start with
+  'currentScore': 0
 };
+
+data.numLives = data.startLives; // Current number. Lives should be set globally so there are no conflicts
 
 // Generic entity object for inheriting. Does not contain any actual functionality
 
@@ -104,6 +108,7 @@ var Player = function () {
   this.sprite = 'images/char-boy.png';
   // Whether the handleInput method should accept input
   this.acceptInput = true;
+  this.lives = data.numLives;
   this.reset();
 };
 
@@ -126,8 +131,7 @@ Player.prototype.update = function () {
   this.y <= -32 && this.acceptInput && this.restart();
   //Check collision
   for (var i = 0; i < allEnemies.length; i++) {
-    // Get a reference to the enemy currently being processed for convenience
-    this.checkCollision(allEnemies[i]) && this.reset();
+    this.checkCollision(allEnemies[i]) && (data.numLives > 0 && data.numLives--, this.reset());
   }
 
 };
@@ -184,6 +188,40 @@ Player.prototype.handleInput = function (keyValue) {
     this.y += data.tile.height;
     break;
   }
+};
+
+// Player controller object. Handles lives and score
+
+var playerController = {};
+
+playerController.heartIcon = 'images/Lives.png';
+
+playerController.render = function () {
+  if (data.state === 0) {
+    for (var i = 0; i < data.numLives; i++) {
+      ctx.drawImage(Resources.get(this.heartIcon), i*30 + 10, 60);
+    }
+  } else if (data.state === 2) {
+    ctx.font = "60px Impact, sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("GAME OVER", data.canvas.width / 2, 250);
+    ctx.font = "24px Impact, sans-serif";
+    ctx.fillText("Press Enter to Restart", data.canvas.width / 2, 380);
+  }
+};
+
+playerController.update = function () {
+  data.numLives === 0 && data.state === 0 && this.gameOver();
+};
+
+playerController.gameOver = function () {
+  // Set state to 2 (game over state)
+  data.state = 2;
+  // Engine.reset();
+};
+
+playerController.handleInput = function (keyCode) {
+  keyCode === 13 && Engine.reset();
 };
 
 // Character selector PLAIN OBJECT (not a function), with update and render functions
@@ -250,6 +288,8 @@ document.addEventListener('keyup', function(e) {
   } else if (data.state === 1) {
     // Simply send the keycode
     characterSelector.handleInput(e.keyCode);
+  } else if (data.state === 2) {
+    playerController.handleInput(e.keyCode);
   }
 
 });

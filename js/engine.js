@@ -80,7 +80,7 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        playerController.update();
     }
 
     /* This is called by the update function  and loops through all of the
@@ -139,7 +139,10 @@ var Engine = (function(global) {
         }
 
         data.state === 1 && characterSelector.render();
-        data.state === 0 && renderEntities();
+        if (data.state === 0) {
+            renderEntities();
+        }
+        playerController.render();
     }
 
     /* This function is called by the render function and is called on each game
@@ -163,6 +166,9 @@ var Engine = (function(global) {
      */
     function reset() {
         // noop
+        data.numLives = data.startLives;
+        data.currentScore = 0;
+        data.state = 1;
     }
 
     /* Go ahead and load all of the images we know we're going to need to
@@ -174,7 +180,8 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/enemy-bug-reversed.png'
+        'images/enemy-bug-reversed.png',
+        'images/Lives.png'
     ]);
 
     // Also list the list of sprites
@@ -186,7 +193,10 @@ var Engine = (function(global) {
      * object when run in a browser) so that developer's can use it more easily
      * from within their app.js files.
      */
-     global.canvas = canvas;
+
+     // Make the reset function globally accessible
+
+    global.canvas = canvas;
     global.ctx = ctx;
     // Initialize the global Engine
     return {
