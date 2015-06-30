@@ -207,7 +207,7 @@ characterSelector.render = function () {
 
 characterSelector.handleInput = function (keyCode) {
   keyCode === 37 && this.selected > 0 && this.selected--;
-  keyCode === 39 && this.selected < characterSelector.numCharacters - 1 && this.selected++;
+  keyCode === 39 && this.selected < this.numCharacters - 1 && this.selected++;
   if (keyCode === 13) {
     // Start game
     player.sprite = data.sprites[this.selected];
