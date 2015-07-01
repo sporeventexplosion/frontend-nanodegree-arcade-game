@@ -19,6 +19,12 @@ var data = {
     'images/char-pink-girl.png',
     'images/char-princess-girl.png'
   ],
+  // Array of all gem sprites
+  'gems': [
+    'images/Gem Green.png',
+    'images/Gem Blue.png',
+    'images/Gem Orange.png'
+  ],
   // The state of the game. 1 is character selecting and 0 is playing
   'state': 1, // Start the game on the character selector
   'startLives': 5, // Number of lives to start with
@@ -149,6 +155,12 @@ Player.prototype.update = function () {
     this.checkCollision(allEnemies[i]) && allEnemies[i].handleCollision(this);
   }
 
+  // Check collision with other entities
+
+  for (var i = 0; i < allEntities.length; i++) {
+    typeof allEntities[i].handleCollision === "function" && this.checkCollision(allEntities[i]) && allEntities[i].handleCollision(this);
+  }
+
 };
 
 
@@ -204,6 +216,42 @@ Player.prototype.handleInput = function (keyValue) {
     break;
   }
 };
+
+// Collectable items
+
+// Gems
+
+var Gem = function () {
+  this.sprite = data.gems[Math.floor(Math.random() * data.gems.length)];
+  this.x = Math.floor(Math.random() * 5) * data.tile.width; // Random row
+  this.y = Math.floor(Math.random ()* 3) * data.tile.height + 51; // Random column
+};
+
+// Inherit Entity
+
+Gem.prototype = Object.create(Entity.prototype);
+Gem.prototype.constructor = Gem;
+
+Gem.prototype.handleCollision = function () {
+  this.applyEffects();
+  this.remove();
+};
+
+
+// The effect to be applied when hitting a gem
+Gem.prototype.applyEffects = function () {
+  // Add 50 to the score
+  data.currentScore += 50;
+};
+
+Gem.prototype.remove = function () {
+  var allEntitiesIndex = allEntities.indexOf(this);
+  // Remove by splice only if the gem is actually in the allEntities array
+  allEntitiesIndex !== -1 && allEntities.splice(allEntitiesIndex, 1);
+};
+
+Gem.prototype.collisionBox = [3, 85, 97, 161];
+
 
 // Player controller object. Handles lives and score
 
@@ -276,6 +324,11 @@ characterSelector.numCharacters = data.sprites.length;
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
+
+// All other entities such as rocks, gems, etc. will be put in an allEntities array
+
+var allEntities = [];
+
 
 var allEnemies = [];
 

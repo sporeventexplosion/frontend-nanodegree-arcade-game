@@ -153,6 +153,13 @@ var Engine = (function(global) {
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
+
+        // Render the gems and other entities first so they are the "lowest"
+
+        allEntities.forEach(function(entity){
+            entity.render();
+        });
+
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
@@ -187,6 +194,8 @@ var Engine = (function(global) {
     // Also list the list of sprites
 
     Resources.load(data.sprites);
+    // Load gems
+    Resources.load(data.gems);
     Resources.onReady(init);
 
     /* Assign the canvas' context object to the global variable (the window
