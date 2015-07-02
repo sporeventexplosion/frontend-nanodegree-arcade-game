@@ -161,7 +161,7 @@ Player.prototype.update = function () {
   // Check collision with other entities
 
   for (var i = 0; i < allEntities.length; i++) {
-    typeof allEntities[i].handleCollision === "function" && this.checkCollision(allEntities[i]) && allEntities[i].handleCollision(this);
+    typeof allEntities[i].handleCollision === 'function' && this.checkCollision(allEntities[i]) && allEntities[i].handleCollision(this);
   }
 
 };
@@ -266,17 +266,17 @@ playerController.render = function () {
   if (data.state === 0) {
     for (var i = 0; i < data.numLives; i++) {
       ctx.drawImage(Resources.get(this.heartIcon), i*30 + 10, 60);
-      ctx.font = "24px Impact, sans-serif";
-      ctx.textAlign = "right";
+      ctx.font = '24px Impact, sans-serif';
+      ctx.textAlign = 'right';
       // Draw score
       ctx.fillText(data.currentScore, data.canvas.width - 20, 80);
     }
   } else if (data.state === 2) {
-    ctx.font = "60px Impact, sans-serif";
-    ctx.textAlign = "center";
-    ctx.fillText("GAME OVER", data.canvas.width / 2, 250);
-    ctx.font = "24px Impact, sans-serif";
-    ctx.fillText("Score: " + data.currentScore + ", Press Enter to Restart", data.canvas.width / 2, 380);
+    ctx.font = '60px Impact, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('GAME OVER', data.canvas.width / 2, 250);
+    ctx.font = '24px Impact, sans-serif';
+    ctx.fillText('Score: ' + data.currentScore + ', Press Enter to Restart', data.canvas.width / 2, 380);
   }
 };
 
@@ -298,16 +298,16 @@ playerController.handleInput = function (keyCode) {
 
 var characterSelector = {};
 
-Resources.load("images/Selector.png");
+Resources.load('images/Selector.png');
 // Render the characters to be selected
 characterSelector.render = function () {
   //Render the text first
-  ctx.font = "24px Impact, sans-serif";
-  ctx.textAlign = "center";
-  ctx.fillText("Use left and right arrows to select character", data.canvas.width / 2, 265);
-  ctx.fillText("Press Enter to Start", data.canvas.width / 2, 300);
+  ctx.font = '24px Impact, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('Use left and right arrows to select character', data.canvas.width / 2, 265);
+  ctx.fillText('Press Enter to Start', data.canvas.width / 2, 300);
   // Render each character
-  ctx.drawImage(Resources.get("images/Selector.png"), this.selected * 101, 300);
+  ctx.drawImage(Resources.get('images/Selector.png'), this.selected * 101, 300);
   for (var i = 0; i < data.sprites.length; i++) {
     ctx.drawImage(Resources.get(data.sprites[i]), i * 101, 300);
   }
