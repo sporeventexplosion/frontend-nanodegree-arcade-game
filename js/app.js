@@ -152,7 +152,7 @@ Player.prototype.reset = function () {
 
 Player.prototype.update = function () {
   //If at row 1 (x value -32), reset. The acceptInput is so the restart function does not fire continuously during the time waited in the restart function.
-  this.y <= -32 && this.acceptInput && this.restart();
+  this.y <= -32 && this.acceptInput && (this.restart(), data.currentScore += 50); // Add 50 to score for every successful round
   //Check collision
   for (var i = 0; i < allEnemies.length; i++) {
     this.checkCollision(allEnemies[i]) && allEnemies[i].handleCollision(this);
