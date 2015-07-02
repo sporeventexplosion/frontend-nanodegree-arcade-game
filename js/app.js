@@ -145,6 +145,9 @@ Player.prototype.reset = function () {
   this.x = data.tile.width * 2;
   // Set x to 4 tiles down. Subtract 32 so figure is in correct position
   this.y = data.tile.height * 5 - 32;
+
+  //Spawn entities (e.g. gems)
+  spawnEntities();
 };
 
 Player.prototype.update = function () {
@@ -263,13 +266,17 @@ playerController.render = function () {
   if (data.state === 0) {
     for (var i = 0; i < data.numLives; i++) {
       ctx.drawImage(Resources.get(this.heartIcon), i*30 + 10, 60);
+      ctx.font = "24px Impact, sans-serif";
+      ctx.textAlign = "right";
+      // Draw score
+      ctx.fillText(data.currentScore, data.canvas.width - 20, 80);
     }
   } else if (data.state === 2) {
     ctx.font = "60px Impact, sans-serif";
     ctx.textAlign = "center";
     ctx.fillText("GAME OVER", data.canvas.width / 2, 250);
     ctx.font = "24px Impact, sans-serif";
-    ctx.fillText("Press Enter to Restart", data.canvas.width / 2, 380);
+    ctx.fillText("Score: " + data.currentScore + ", Press Enter to Restart", data.canvas.width / 2, 380);
   }
 };
 
@@ -320,6 +327,21 @@ characterSelector.selected = 0;
 
 // Number of characters
 characterSelector.numCharacters = data.sprites.length;
+
+var spawnEntities = function () {
+
+
+
+  // Clear all previous gems
+  allEntities.forEach(function(entity){
+    entity instanceof Gem && entity.remove();
+  });
+  // Generate a random number of gems
+  for (var i = Math.floor(Math.random() * 3); i > 0; i--) {
+    // Overlapping is acceptable
+    allEntities.push(new Gem());
+  }
+};
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
