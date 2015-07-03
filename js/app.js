@@ -1,5 +1,7 @@
 // A data object holding the global game configuration
 
+"use strict";
+
 var data = {
   // Canvas size
   'canvas': {
