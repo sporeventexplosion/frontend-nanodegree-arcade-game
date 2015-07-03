@@ -2,6 +2,10 @@
 
 A simple, easy-to-play game similar to Frogger.
 
+You need a browser that supports the HTML5 Canvas API and requestAnimationFrame to successfully play this game.
+
+Play the game on [my Github Pages](http://sporeventexplosion.github.io/frontend-nanodegree-arcade-game/index.html).
+
 * Use the arrow keys to move your player around the screen.
 * The goal of the game is to reach the water at the top of the screen.
 * You have 5 lives and one is lost each time you touch a bug.
